@@ -1,0 +1,4 @@
+interface:
+  display_name: "Open Fork"
+  short_description: "Open a Git repository in Fork on macOS"
+  default_prompt: "Open the requested Git repository in Fork."

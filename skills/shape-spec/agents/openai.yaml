@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape Spec"
+  short_description: "Shape specifications through progressive refinement"
+  default_prompt: "Use $shape-spec to collaboratively shape this idea into an evolving specification."

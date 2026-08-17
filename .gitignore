@@ -1,0 +1,11 @@
+# Skill-manager state
+.skill-lock.json
+
+# Externally managed skills
+skills/*
+
+# Personal skills tracked by this repository
+!skills/open-fork/
+!skills/open-fork/**
+!skills/shape-spec/
+!skills/shape-spec/**
