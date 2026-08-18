@@ -1,5 +1,9 @@
 # General guidelines
 
+## Code organization
+
+- Prefer to put the primary exports together with their interface towards the top of the file. Helper functions, constants, etc. should be below. The point is that, as a reader, when I open a file, I want to see the primary thing at the top.
+
 ## Documentation, comments, commit messages
 
 - When writing a longer function/method, consider adding brief inline comments to make it easier to read
