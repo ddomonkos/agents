@@ -14,3 +14,6 @@
 
 - Prefer to use accessible selectors instead of test ids when possible/reasonable
 
+## Reviewing code
+
+For code reviews, please read the [reviewer guidelines](./REVIEWER.md).
