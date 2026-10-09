@@ -1,23 +1,26 @@
 ---
 name: simple-review
-description: Run a multi-pass code review with parallel Codex and Claude reviewers, emphasizing simplicity, maintainability, readability, and practical correctness. Invoke manually with /skill:simple-review.
+description: Run a multi-pass code review with two independent reviewers in parallel, emphasizing simplicity, maintainability, readability, and practical correctness. Run only when explicitly invoked by the user.
 disable-model-invocation: true
 ---
 
 # Simple review
 
-Run this skill only when the user explicitly invokes `/skill:simple-review`. Don't start it for a general review request or while editing the skill.
+Run this skill only when the user explicitly invokes it using the environment's supported syntax, such as `/skill:simple-review` in OMP or `/simple-review` in Claude Code, or asks ChatGPT to use the skill. Don't start it for a general review request or while editing the skill.
 
-Run exactly two subagents once, in one parallel task batch. Each reviewer completes all passes in order within the same session:
+Use this skill in OMP, Claude Code, or the ChatGPT app with parallel subagent support. Launch exactly two reviewer subagents in parallel using the environment's native tools. Each reviewer completes all passes in order within the same session. Don't launch additional reviewers; continue the existing reviewers when reconciliation needs a follow-up.
 
-- `codex-reviewer`, backed by the `CODEX-REVIEWER` model role
-- `claude-reviewer`, backed by the `CLAUDE-REVIEWER` model role
+Prefer different models for the two reviewers when the environment makes them available. Otherwise, use the same available model in two separate reviewer contexts.
+
+In OMP, use `codex-reviewer` and `claude-reviewer` when both are available, backed by the `CODEX-REVIEWER` and `CLAUDE-REVIEWER` model roles. Otherwise, choose available subagents that can carry out the complete review.
+
+If the environment can't launch two subagents in parallel, report that limitation instead of substituting a single-reviewer or sequential workflow.
 
 Do not use `review-anvil` or any related review-anvil skill.
 
 Give both reviewers the same target, context, and complete review instructions. Let them work independently from each other. Ask each reviewer to keep the passes distinct in its reasoning and report, while carrying relevant context forward. Conclusions from an earlier pass are useful context, not settled facts: the reviewer should revise them when later evidence contradicts them.
 
-After both reviewers complete all passes, collect their findings, check material claims against the code and available context, and merge duplicates. If you disagree with a finding or the reviewers conflict, talk to the relevant reviewer or reviewers through agent messaging. Share the missing context or counterargument and ask them to reconsider. Continue until you reach common ground or clearly identify the remaining disagreement. Do not decide by majority without examining the evidence.
+After both reviewers complete all passes, collect their findings, check material claims against the code and available context, and merge duplicates. If you disagree with a finding or the reviewers conflict, use the environment's messaging or continuation tools to ask the relevant reviewers to reconsider. Share the missing context or counterargument. Continue until you reach common ground or clearly identify the remaining disagreement. If follow-up isn't available, resolve what you can from the evidence and state any remaining material uncertainty. Do not decide by majority without examining the evidence.
 
 If a reviewer finds a fundamental motivation or design problem that makes the remaining review wasteful, it may stop and report that problem instead of reviewing an implementation that should be reconsidered.
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Simple Review"
-  short_description: "Run a practical multi-pass review with Codex and Claude"
-  default_prompt: "Run a multi-pass Codex and Claude review of the requested code or changes."
+  short_description: "Run a multi-pass review with two independent reviewers"
+  default_prompt: "Use simple-review to review the requested code or changes with two independent reviewers in parallel."
