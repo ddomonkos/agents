@@ -18,11 +18,17 @@ If the environment can't launch two subagents in parallel, report that limitatio
 
 Do not use `review-anvil` or any related review-anvil skill.
 
-Give both reviewers the same target, context, and complete review instructions. Let them work independently from each other. Ask each reviewer to keep the passes distinct in its reasoning and report, while carrying relevant context forward. Conclusions from an earlier pass are useful context, not settled facts: the reviewer should revise them when later evidence contradicts them.
+Give both reviewers the same review scope and, when reviewing changes, the same comparison baseline. Resolve these from the request and repository context; ask only if materially ambiguous. Give both reviewers the same context and complete review instructions. Let them work independently from each other. Ask each reviewer to keep the passes distinct in its reasoning and report, while carrying relevant context forward. Conclusions from an earlier pass are useful context, not settled facts: the reviewer should revise them when later evidence contradicts them.
+
+For PR reviews, consider existing review discussion and validate relevant author explanations against the current code before repeating a concern.
 
 After both reviewers complete all passes, collect their findings, check material claims against the code and available context, and merge duplicates. If you disagree with a finding or the reviewers conflict, use the environment's messaging or continuation tools to ask the relevant reviewers to reconsider. Share the missing context or counterargument. Continue until you reach common ground or clearly identify the remaining disagreement. If follow-up isn't available, resolve what you can from the evidence and state any remaining material uncertainty. Do not decide by majority without examining the evidence.
 
+Check that each recommended change addresses the underlying problem and is proportional to its impact. Prefer the smallest clear change that preserves required behavior.
+
 If a reviewer finds a fundamental motivation or design problem that makes the remaining review wasteful, it may stop and report that problem instead of reviewing an implementation that should be reconsidered.
+
+Before reporting a material finding, inspect the relevant surrounding code, callers, and tests. Distinguish a demonstrated defect from missing coverage or an unresolved design choice.
 
 Do not invent findings. Each reported finding costs the author time and attention, so include it only when it matters. You may collect minor issues and unlikely edge cases while reviewing, but put them in a short footnote only when they provide useful context. It is valid to return no findings.
 
@@ -86,5 +92,7 @@ Comments should explain useful context that the code cannot express clearly on i
 Present one concise report in simple, human-friendly language. Use technical detail only where it helps the author act.
 
 Prioritize findings by impact. For each finding, explain why it matters and include file and line references where possible. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
+
+State any material gaps in review coverage. Don't present an incomplete review as a clean result.
 
 Keep minor issues and unlikely edge cases in an optional, brief footnote. Do not inflate the report with a play-by-play of the review process.
