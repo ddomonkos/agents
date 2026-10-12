@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare Worktree"
+  short_description: "Set up a local checkout of a repo, branch, or PR"
+  default_prompt: "Use prepare-worktree to set up a local checkout of the requested repository, branch, or pull request."
