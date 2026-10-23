@@ -1,4 +1,4 @@
 interface:
   display_name: "Simple Review"
-  short_description: "Run a multi-pass review with two independent reviewers"
+  short_description: "Run a multi-pass review with two independent reviewers and manual testing when warranted"
   default_prompt: "Use simple-review to review the requested code or changes with two independent reviewers in parallel."

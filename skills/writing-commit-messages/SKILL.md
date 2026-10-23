@@ -75,7 +75,17 @@ This reverts commit <hash>.
 
 ## Gate 2: Content (quality)
 
-Default: include a body unless the change is trivial and obvious from header.
+Length should follow how much needs explaining, not how big or important the commit feels. Most of
+the guidance below applies when a body is needed; it does not make a body mandatory.
+
+- Header only: the change is obvious from the header and the reason is clear or unimportant
+  (typo fixes, dependency bumps, small renames, straightforward cleanups).
+- One or two sentences: the change is simple, but the reason is not obvious from the header.
+- Longer body: the motivation, constraints, trade-offs, or risks are non-obvious. Even a one-line
+  diff can deserve this if the reason behind it is subtle.
+
+Do not pad a short message to make it look thorough. Restating the diff, explaining obvious
+motivation, or adding sections with nothing new to say makes the important commits harder to spot.
 
 ### Primary Principles
 
@@ -236,7 +246,8 @@ Keep durable references:
 5. Add alternatives/limitations only when they reduce future ambiguity.
 6. Add non-trivial verification notes only when they add unique context; skip routine command lists.
 7. Add references, media links (if useful), and breaking/migration notes.
-8. Final pass: message should make sense without opening diff.
+8. Final pass: message should make sense without opening diff. Cut sentences that only restate the
+   header or diff; a short message is fine when nothing else needs explaining.
 
 ## Quick Review Checklist
 
@@ -248,6 +259,8 @@ Keep durable references:
 - Body starts with highest-value context (inverted pyramid).
 - When replacing behavior, body names the old behavior, symptom, or cost before the new state.
 - Body explains impact and motivation for non-trivial changes.
+- Length matches what needs explaining: simple changes with clear motivation stay short or
+  header-only; no padding.
 - Body uses natural prose; bullets are used only when they improve clarity.
 - Sentence and paragraph openings vary naturally; repeated `We`, `This`, or tool-name openings are
   deliberate rather than mechanical.
