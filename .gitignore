@@ -1,2 +1,5 @@
 # Skill-manager state
 .skill-lock.json
+/skills/synced
+/skills/git-branch
+/skills/git-commit
