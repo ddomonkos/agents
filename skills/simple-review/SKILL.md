@@ -137,6 +137,16 @@ Present one concise report in simple, human-friendly language. Use technical det
 
 Prioritize findings by impact. For each finding, explain why it matters and include file and line references where possible. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
 
+When a concrete scenario makes a finding easier to understand, include one, in both the report and PR comments. Keep it short and simple, and write it as bullet points: the starting state, what the user or system does, and what goes wrong. For example:
+
+```markdown
+- A user has two tabs open on the same form.
+- They save in the first tab, then save in the second.
+- The second save silently overwrites the first one.
+```
+
+Skip the scenario when the problem is already obvious from the explanation.
+
 State any material gaps in review or testing coverage. Don't present an incomplete review as a clean result.
 
 Report the testing level. If you tested, list failed and blocked cases, summarize what passed, and include a short "Setup friction" section when the tester recorded any. It tells the human where setup docs or flows could improve.
