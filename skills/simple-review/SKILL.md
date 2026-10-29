@@ -8,15 +8,32 @@ disable-model-invocation: true
 
 Run this skill only when the user explicitly invokes it using the environment's supported syntax, such as `/skill:simple-review` in OMP or `/simple-review` in Claude Code, or asks ChatGPT to use the skill. Don't start it for a general review request or while editing the skill.
 
-Use this skill in OMP, Claude Code, or the ChatGPT app with parallel subagent support. Launch exactly two reviewer subagents in parallel using the environment's native tools. Each reviewer completes all passes in order within the same session. Also launch a high-level reviewer when the change makes a [material decision](#high-level-review), and the testing agents described in [Manual testing](#manual-testing) when testing is warranted. Don't launch other subagents; continue the existing ones when reconciliation needs a follow-up.
+Use this skill in OMP, Claude Code, or the ChatGPT app with parallel subagent support. Launch exactly two reviewer subagents in parallel using the environment's native tools, or one in [light mode](#light-mode). Each reviewer completes all passes in order within the same session. Also launch a high-level reviewer when the change makes a [material decision](#high-level-review), and the testing agents described in [Manual testing](#manual-testing) when testing is warranted. Don't launch other subagents; continue the existing ones when reconciliation needs a follow-up.
 
 Prefer different models for the two reviewers when the environment makes them available. Otherwise, use the same available model in two separate reviewer contexts.
 
 In OMP, use `codex-reviewer` and `claude-reviewer` when both are available, backed by the `CODEX-REVIEWER` and `CLAUDE-REVIEWER` model roles. Otherwise, choose available subagents that can carry out the complete review.
 
-If the environment can't launch two subagents in parallel, report that limitation instead of substituting a single-reviewer or sequential workflow.
+If the environment can't launch two subagents in parallel, report that limitation instead of substituting a single-reviewer or sequential workflow, unless light mode applies.
 
 Do not use `review-anvil` or any related review-anvil skill.
+
+## Light mode
+
+Use light mode for a small change, unless the user asks for a full review. All of these must hold:
+
+- It does one thing, such as a single fix or a small cleanup.
+- It changes roughly 50 lines of production code or fewer. Tests don't count.
+- No [high-level review](#high-level-review) trigger applies.
+- It doesn't touch areas that call for thorough testing, such as auth, payments, data migrations, or persisted formats.
+
+When it applies, say so at the top of the report, with the reason. Then:
+
+- Launch one reviewer, preferably `codex-reviewer` in OMP, with the full brief and all passes. The passes stay the same; a small diff makes them quick.
+- Check its findings with the same rules as in [Reconciliation](#reconciliation). Follow up only on findings you dispute.
+- Default the testing level to None. Use targeted testing only when the change fixes a user-visible bug that's cheap to show on the base and gone on the change, for example on an existing branch deploy.
+
+Switch to the full review when the reviewer finds something that breaks one of the conditions above, such as a wider blast radius than the diff suggests.
 
 ## Prepare the brief
 
@@ -189,7 +206,7 @@ When the behavior can't be triggered without changing code, such as a failure pa
 Give the tester a manual-testing brief:
 
 - **Purpose:** what the change is meant to do, from its description, commit messages, and linked issues.
-- **Target:** the reviewed revision, such as the PR head commit or the user's working tree. For a bug fix or behavior change, also the base revision: run the same steps on both and show the expected difference. Evidence that looks the same on both doesn't show the change. When the bug only appears together with a follow-up change, compare the follow-up with and without this change, or say why the comparison doesn't apply.
+- **Target:** the reviewed revision, such as the PR head commit or the user's working tree. For a deployed web app, prefer an existing deploy of exactly that commit, such as a branch deploy, when the app guide documents one. For a bug fix or behavior change, also the base revision: run the same steps on both and show the expected difference. Evidence that looks the same on both doesn't show the change. When the bug only appears together with a follow-up change, compare the follow-up with and without this change, or say why the comparison doesn't apply.
 - **Cases:** one per changed behavior. For a broad change, cover every changed item, not a sample. Items that behave identically may share a case only when the brief says so. Take expected results from the requirements, not from what the changed code does. Skip behavior that automated tests already exercise for real, and name those tests.
 - **Limits:** don't edit the reviewed checkout, push, post, or touch shared or production environments. Allowed: running another revision in a separate worktree and installing its project dependencies, and installing a headless browser such as Playwright in a scratch directory outside the project.
 - **Review:** full evidence review for thorough testing, spot-check for targeted.
