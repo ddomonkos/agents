@@ -26,6 +26,8 @@ After both reviewers complete all passes and any manual testing is checked, coll
 
 Check that each recommended change addresses the underlying problem and is proportional to its impact. Prefer the smallest clear change that preserves required behavior.
 
+After reconciliation, check each remaining finding against the comparison baseline: did the change introduce the problem, or did it already exist? Code that was moved, renamed, or refactored can carry an old problem along so it looks new. Find the original code and check whether it behaved the same way. Mark a finding as pre-existing only when the baseline shows the same problem. Keep pre-existing findings in the report. The author may reasonably leave them out of a change that only moves code.
+
 If a reviewer finds a fundamental motivation or design problem that makes the remaining review wasteful, it may stop and report that problem instead of reviewing an implementation that should be reconsidered.
 
 Before reporting a material finding, inspect the relevant surrounding code, callers, and tests. Distinguish a demonstrated defect from missing coverage or an unresolved design choice.
@@ -135,7 +137,7 @@ In OMP, use `test-planner` and `tester`, backed by the `TEST-PLANNER` and `TESTE
 
 Present one concise report in simple, human-friendly language. Use technical detail only where it helps the author act.
 
-Prioritize findings by impact. For each finding, explain why it matters and include file and line references where possible. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
+Prioritize findings by impact. For each finding, explain why it matters and include file and line references where possible. Label pre-existing findings as "Pre-existing" and point to where the problem was in the original code. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
 
 When a concrete scenario makes a finding easier to understand, include one, in both the report and PR comments. Keep it short and simple, and write it as bullet points: the starting state, what the user or system does, and what goes wrong. For example:
 
@@ -152,6 +154,8 @@ State any material gaps in review or testing coverage. Don't present an incomple
 Report the testing level. If you tested, list failed and blocked cases, summarize what passed, and include a short "Setup friction" section when the tester recorded any. It tells the human where setup docs or flows could improve.
 
 Keep minor issues and unlikely edge cases in an optional, brief footnote. Do not inflate the report with a play-by-play of the review process.
+
+In PR comments, link to code only when the author would want to open it, for example to see evidence for the finding or a related place outside the diff. Keep links few, usually one or two per comment. An inline comment already sits on its line, so don't link back to it. A plain comment with no links is often easiest to read. When you do link, use a commit permalink to the exact lines, such as `https://github.com/<owner>/<repo>/blob/<sha>/<path>#L10-L14`. Use the PR's head commit SHA for code in the change, and the base commit SHA for the original code behind a pre-existing finding. For Markdown files, add `?plain=1` before the line anchor. Use short link text such as `src/foo.ts:10`. When seeing the code helps, put the bare permalink on its own line instead, so GitHub shows the lines as an embedded snippet.
 
 If you post findings as PR comments, keep each comment short and easy for a human to read. Say what's wrong, why it matters, and what to change. Leave out review process details. End every comment, including the review summary, with a signature line:
 
