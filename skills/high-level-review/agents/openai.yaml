@@ -1,0 +1,4 @@
+interface:
+  display_name: "High-level Review"
+  short_description: "Question whether a change should be done this way at all"
+  default_prompt: "Use high-level-review to check whether the requested change or proposal is justified and whether a simpler option, existing code, a library, or a vendor would serve better."
