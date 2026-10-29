@@ -248,7 +248,7 @@ Label each finding by importance, following Google's review conventions:
 
 Pre-existing findings are Optional or FYI unless this change needs to address them. Put minor issues and unlikely edge cases in one short labeled footnote, not in the sections.
 
-For each finding, say what triggers it, what goes wrong, the evidence, and the smallest fix. Include file and line references where possible. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
+For each finding, say in plain words what goes wrong, when it happens, and what to change. Add evidence only when the author would otherwise doubt the finding. Point to the file and line in the report; in PR comments, follow the link rules below. Omit findings resolved as invalid during reconciliation. If a disagreement remains, state the positions and practical tradeoff.
 
 When a concrete scenario makes a finding easier to understand, include one, in both the report and PR comments. Keep it short and simple, and write it as bullet points: the starting state, what the user or system does, and what goes wrong. For example:
 
@@ -268,11 +268,11 @@ Do not inflate the report with a play-by-play of the review process.
 
 ## PR comments
 
-Post inline comments for unlabeled findings and questions. Collect Nit, Optional, and FYI items in the review summary instead of posting each one inline. Phrase comments as questions when the author may have a reason you don't know.
+Post inline comments for unlabeled findings and questions. Collect Nit, Optional, and FYI items in the review summary as a short list, one line each, instead of posting each one inline. Ask a question when you really don't know the reason for a choice; otherwise state the problem directly.
 
 Link to code only when the author would want to open it, for example to see evidence for the finding or a related place outside the diff. Keep links few, usually one or two per comment. An inline comment already sits on its line, so don't link back to it. A plain comment with no links is often easiest to read. When you do link, use a commit permalink to the exact lines, such as `https://github.com/<owner>/<repo>/blob/<sha>/<path>#L10-L14`. Use the PR's head commit SHA for code in the change, and the base commit SHA for the original code behind a pre-existing finding. For Markdown files, add `?plain=1` before the line anchor. Use short link text such as `src/foo.ts:10`. When seeing the code helps, put the bare permalink on its own line instead, so GitHub shows the lines as an embedded snippet.
 
-Keep each comment short and easy for a human to read. Say what's wrong, why it matters, and what to change. Start it with its label when it has one, such as "Nit:". Leave out review process details. End every comment, including the review summary, with a signature line:
+Write comments in simple, everyday language, the way a colleague would explain the problem. Keep each comment short: say what's wrong, why it matters, and what to change, usually in two or three sentences. Make one point per comment. Avoid the review's internal terms, such as "reachable", "introduced", or "pre-existing", unless the author needs them; say what happens instead. Start the comment with its label when it has one, such as "Nit:". Leave out review process details. End every comment, including the review summary, with a signature line:
 
 ```markdown
 _Posted by <agent> on behalf of @<user>._
