@@ -1,0 +1,7 @@
+interface:
+  display_name: "Manual Testing"
+  short_description: "Test behavior in the running app with reviewed evidence"
+  default_prompt: "Use $manual-testing to test the requested behavior in the running app, save evidence for each case, and get the evidence independently reviewed."
+
+policy:
+  allow_implicit_invocation: false

@@ -185,7 +185,7 @@ When reviewing a change again after the author responded:
 
 ## Manual testing
 
-Manual testing runs alongside the review. It checks that the change works when actually used. This skill decides what to test. The [manual-testing](../manual-testing/SKILL.md) skill covers how: environments, browsers, accounts, evidence, outcomes, and the evidence review. Read it before testing. If it isn't installed, install it from `sli-do/agent-skills` with the user's permission, or report manual testing as a coverage gap.
+Manual testing runs alongside the review. It checks that the change works when actually used. This skill decides what to test. The [manual-testing](../manual-testing/SKILL.md) skill covers how: environments, browsers, accounts, evidence, outcomes, and the evidence review. Read it before testing; it also tells you where to find the app's testing context. If it isn't installed, report manual testing as a coverage gap.
 
 ### Choose a testing level
 
